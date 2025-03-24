@@ -1,0 +1,83 @@
+[
+    {
+      "feedback": "Why is my mobile data so slow in Auckland? I'm paying for 5G but barely getting 3G speeds!",
+      "response": "We're sorry you're experiencing slow speeds! Can you please DM us your location details and account info so we can check for network issues in your area?"
+    },
+    {
+      "feedback": "I've been on hold for over an hour trying to get support. This is unacceptable!",
+      "response": "We apologize for the long wait time. Our team is experiencing higher-than-usual call volumes. You can also reach us via live chat or DM for faster assistance."
+    },
+    {
+      "feedback": "Why do you keep increasing prices without improving service? This is a rip-off!",
+      "response": "We understand price changes can be frustrating. Our recent adjustments help us invest in better network coverage and faster speeds. Let us know if you'd like to review your plan options."
+    },
+    {
+      "feedback": "My broadband keeps disconnecting randomly. Fix this ASAP!",
+      "response": "That sounds frustrating! Please restart your modem and check for any service outages in your area. If the issue persists, DM us with your account details so we can investigate."
+    },
+    {
+      "feedback": "I switched to One NZ for better coverage, but I barely get a signal in my house!",
+      "response": "We're sorry to hear that! Can you share your location via DM? We’ll check coverage and see if a solution like WiFi Calling or a signal booster might help."
+    },
+    {
+      "feedback": "Your customer service is useless! No one ever helps with real issues.",
+      "response": "We’re sorry you feel this way. Can you let us know the issue you’re facing? We’d love to help resolve it."
+    },
+    {
+      "feedback": "I paid my bill, but my account still says overdue. What’s going on?",
+      "response": "That shouldn’t be happening! Payments can take some time to process. DM us your details so we can check your account and sort this out."
+    },
+    {
+      "feedback": "Why is your roaming so expensive? $8 a day is too much!",
+      "response": "We understand cost concerns. Our roaming plans offer unlimited calls, texts, and data in many countries. If you’d like alternatives, we can help find the best option for you."
+    },
+    {
+      "feedback": "Your website is so slow and crashes when I try to pay my bill. Fix it!",
+      "response": "Thanks for flagging this! Can you try clearing your browser cache or using another device? If the issue continues, let us know so we can investigate."
+    },
+    {
+      "feedback": "I ordered a new SIM a week ago and still haven’t received it. What’s the delay?",
+      "response": "Sorry for the wait! Shipping can take longer during busy periods. DM us your order number, and we’ll check on your delivery status."
+    },
+    {
+      "feedback": "Your broadband speeds are a joke. Paying for 900Mbps and getting 50Mbps. Why?",
+      "response": "That’s not the experience we want for you. Can you run a speed test and DM us the results? We’ll check if there’s an issue with your connection."
+    },
+    {
+      "feedback": "Why do you charge a $5 fee just to speak to a customer service agent? Ridiculous!",
+      "response": "We offer multiple free support options like live chat and our app. The fee helps us prioritize self-service options, but we’re happy to assist however we can."
+    },
+    {
+      "feedback": "Network outages again? Why is One NZ always down?",
+      "response": "We know outages are frustrating. Can you check our service status page for updates? If your area isn’t listed, DM us so we can look into it."
+    },
+    {
+      "feedback": "Your app is terrible! Half the time, I can’t even log in.",
+      "response": "That’s not ideal! Have you tried updating the app or reinstalling it? If the issue continues, let us know your device details so we can assist."
+    },
+    {
+      "feedback": "I canceled my plan last month, but you still charged me. Refund me now!",
+      "response": "Sorry for the inconvenience! Some charges may apply for the final billing cycle. DM us your details, and we’ll review your account to resolve this."
+    },
+    {
+      "feedback": "Why is there no unlimited data option? Every other provider has one!",
+      "response": "We offer high-data plans with great value. While we don’t have unlimited data yet, we’re always looking at ways to improve our plans. Let us know what works best for you!"
+    },
+    {
+      "feedback": "5G coverage is supposed to be nationwide, but I barely get a signal in my area. What’s up?",
+      "response": "5G coverage is expanding, but some areas may still have limited connectivity. Can you share your location via DM? We’ll check what’s available for you."
+    },
+    {
+      "feedback": "Why do you throttle speeds after reaching the data cap? It’s unfair!",
+      "response": "We slow speeds after the cap to ensure fair usage for all customers. If you need more data, we have add-ons available—let us know if you'd like details."
+    },
+    {
+      "feedback": "Your customer service reps keep giving me different answers! Which one is right?",
+      "response": "We apologize for any confusion. Let us know the issue, and we’ll get you a clear and accurate answer."
+    },
+    {
+      "feedback": "I regret switching to One NZ. Can I just cancel and go back to my old provider?",
+      "response": "We’re sorry you feel that way. If there’s something we can do to improve your experience, let us know. We’d love to help!"
+    }
+  ]
+  
