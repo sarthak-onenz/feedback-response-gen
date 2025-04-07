@@ -2,15 +2,7 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 import json
-from environment import WRITER_API_KEY, AWS_SESSION_TOKEN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-
-import writer.ai
-
-#writer.ai.init(WRITER_API_KEY)
-
-#def llm_call_writer(prompt):
-#    return writer.ai.complete(prompt)
-
+from environment import AWS_SESSION_TOKEN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 
 session = boto3.Session(
