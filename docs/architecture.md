@@ -1,20 +1,16 @@
-# Runtime
+# Topic modelling
 
 1. Access feedback survey responses data from Snowflake.
 2. Parse into a standard structure.
-3. Use topic modelling to find the topic(s) of the survey response.
-    - Match it against existing vectordb of topics.
-    - If a new topic exists, add it to the primary vectordb.
-    - If it doesn't exist, then search it against the secondary vectordb.
-        - If it does exist, increment the count in the metadata.
-        - If it doesn't exist, add it.
-    - If it does exist, then return the entry along with the metadata.
-    - Use an LLM to find, out of the search results, which are the issues actually present in the user's feedback.
-4. Return the resolution for these issues.
-5. If required, also send a Teams message or email to the concerned team.
+3. Use topic modelling to find the topic(s) of the survey response by following these steps:
+    - Search the user message against existing vectordb of topics.
+    - Give the retrieved topics and user message to an LLM, asking it to give the topics which exist in the list and suggest new topics.
+    - Increment the count of all topics found in the user message.
 
-# Adding knowledge
 
-1. For all responses in the secondary vectordb, rank them by count.
-2. Have a human validate them and add the resolution for them.
-3. Add the validates ones the primary vectordb.
+# Response generation
+
+1. All topics are stored in an Excel sheet, along with a count of how often they are mentioned by users. The brand team can fill out the resolutions/comments we want to send to customers for each topic.
+2. Retrieve the resolution for all topics mentioned by a customer at runtime.
+3. Give the user's original message, and the resolution for each topic, to an LLM, and ask it to generate a personalised email to them.
+4. Have a human at the brand team review the email and send it to the customer.

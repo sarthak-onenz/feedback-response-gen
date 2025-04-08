@@ -2,7 +2,7 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 import json
-from environment import AWS_SESSION_TOKEN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from utils.environment import AWS_SESSION_TOKEN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 
 session = boto3.Session(

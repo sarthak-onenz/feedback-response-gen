@@ -1,8 +1,8 @@
 import json
 import pandas as pd
 from typing import List
-from llm import llm_call_anthropic
-from prompts import TopicExtraction
+from utils.llm import llm_call_anthropic
+from topic_modelling.prompts import TopicExtraction
 
 def format_user_message(improvement_needed: str, reason_for_given_nps: str):
     user_message = ""
