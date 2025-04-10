@@ -2,6 +2,8 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 import json
+from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+
 from utils.environment import AWS_SESSION_TOKEN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 
@@ -71,3 +73,16 @@ def llm_call_anthropic(user_message, system_prompt):
         return None
     
     
+def get_embedding(text):
+    model_name = "BAAI/bge-small-en-v1.5"
+    #model_kwargs = {'device': 'cuda'}
+    encode_kwargs = {'normalize_embeddings': True} # set True to compute cosine similarity
+    model = HuggingFaceBgeEmbeddings(
+        model_name=model_name,
+        #model_kwargs=model_kwargs,
+        encode_kwargs=encode_kwargs,
+        query_instruction=""
+    )
+    #model.query_instruction = "Get embeddings"
+
+    return model.embed_query(text)
