@@ -6,3 +6,6 @@ class Topic(BaseModel):
     resolution_statement: str
     examples: List[str] = None
     count: int = 0
+
+class EscalationTopic(BaseModel):
+    statement: str

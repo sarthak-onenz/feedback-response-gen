@@ -13,9 +13,13 @@ def format_user_message(improvement_needed: str, reason_for_given_nps: str):
         user_message += f"""Reason for given NPS: {reason_for_given_nps}"""
     return user_message
 
-def extract_topics_from_user_message(user_message: str, topics: List[str], retries: int=5):
+def extract_topics_from_user_message(user_message: str,
+                                     topics: List[str],
+                                     escalation_topics: List[str],
+                                     retries: int=5
+                                     ):
     try:
-        topic_extraction_system_prompt = TopicExtraction(topics=topics).system_prompt
+        topic_extraction_system_prompt = TopicExtraction(topics=topics, escalation_topics=escalation_topics).system_prompt
         llm_response = llm_call_anthropic(system_prompt=topic_extraction_system_prompt, user_message=user_message)
         print("llm response", llm_response)
         extracted_topics = json.loads(llm_response)
@@ -23,7 +27,10 @@ def extract_topics_from_user_message(user_message: str, topics: List[str], retri
     except Exception as e:
         print("ERROR", e, llm_response)
         if retries > 0:
-            return extract_topics_from_user_message(user_message=user_message, topics=topics, retries=retries-1)
+            return extract_topics_from_user_message(user_message=user_message,
+                                                    topics=topics,
+                                                    escalation_topics=escalation_topics,
+                                                    retries=retries-1)
         else:
             return {
                         "detected_topics" : [],
