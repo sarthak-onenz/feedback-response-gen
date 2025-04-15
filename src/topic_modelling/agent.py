@@ -25,7 +25,7 @@ def extract_topics_from_user_message(user_message: str,
         extracted_topics = json.loads(llm_response)
         return extracted_topics
     except Exception as e:
-        print("ERROR", e, llm_response)
+        print("ERROR in extract_topics_from_user_message", e, llm_response)
         if retries > 0:
             return extract_topics_from_user_message(user_message=user_message,
                                                     topics=topics,
@@ -59,11 +59,15 @@ def create_topic_objects_from_extracted_topics(
     df["Topic"] = df["Topic"].str.lower().str.strip()
 
     topic_objects = []
-    for topic in extracted_topics["detected_topics"] + extracted_topics["suggested_topics"]:
+    for topic in extracted_topics["detected_topics"]:
         normalized_topic = topic.lower().strip()
         row = df[df["Topic"].str.contains(normalized_topic, na=False)]
-
-        resolution_statement = row["Resolution_or_comment"].values[0] if not row.empty else "No resolution found."
+        resolution_statement = row["Resolution"].values[0] if not row.empty else "No resolution found."
+        topic_objects.append(Topic(topic_name=topic, resolution_statement=str(resolution_statement)))
+    
+    for topic in extracted_topics["suggested_topics"]:
+        # We don't have resolutions for these topics.
+        resolution_statement = "No resolution found."
         topic_objects.append(Topic(topic_name=topic, resolution_statement=str(resolution_statement)))
     
     return topic_objects

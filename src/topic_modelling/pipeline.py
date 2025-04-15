@@ -1,26 +1,30 @@
 import pandas as pd
 from tqdm.notebook import tqdm
 import json
+from typing import Dict
 
 from utils.models import Topic, EscalationTopic
-from utils.constants import CURRENT_TOPICS, N_EXAMPLES_OF_EACH_TOPIC
+from utils.constants import CURRENT_TOPICS, N_EXAMPLES_OF_EACH_TOPIC, useful_cols_and_completed_df
+from utils.llm import get_embedding
 from topic_modelling.agent import extract_topics_from_user_message, format_user_message
 from topic_modelling.vectordb import create_topics_vectordb
 from escalation.vectordb import create_escalation_topics_vectordb
 
-useful_cols_and_completed_df = pd.read_csv("input_feedback_data/snowflake_data/useful_cols_and_completed_df.csv")
-print("Topic modelling on", len(useful_cols_and_completed_df), "survey responses")
-
+useful_cols_and_completed_df = pd.read_csv(useful_cols_and_completed_df)[:10]
 
 def extract_topics_from_all_survey_responses():
-    current_topics_with_count = {topic : Topic(topic_name=topic,
+    print("Topic modelling on", len(useful_cols_and_completed_df), "survey responses")
+
+    current_topics_with_count = {}
+    for i, topic in enumerate(CURRENT_TOPICS):
+        print(f"Extracting embedding from given topic {str(i)} / {str(len(useful_cols_and_completed_df))}")
+        current_topics_with_count[topic] = Topic(topic_name=topic,
                                             resolution_statement=" ",
                                             examples = [],
-                                            count = 0
+                                            count = 0,
+                                            embedding=get_embedding(topic)
                                             )
-                                for topic in CURRENT_TOPICS}
-
-
+                                
     for i, row in useful_cols_and_completed_df.iterrows():
         improvement_needed = row["NZ_RELATIONSHIP_IMPORTANT_IMPROVEMENT_CMT"]
         reason_for_given_nps = row["NZ_RELATIONSHIP_NPS_REASON_CMT"]
@@ -43,7 +47,8 @@ def extract_topics_from_all_survey_responses():
                         current_topics_with_count[topic] = Topic(topic_name=topic,
                                                                 resolution_statement=" ",
                                                                 count=1,
-                                                                examples=[user_message]
+                                                                examples=[user_message],
+                                                                embedding=get_embedding(topic)
                                                                 )
                 print("\n\n----------------------------------------------------------\n\n")
 
@@ -51,13 +56,14 @@ def extract_topics_from_all_survey_responses():
     return current_topics_with_count        
 
 
-def export_topics_data(current_topics_with_count):
+def export_topics_data(current_topics_with_count: Dict[str, Topic]):
     # Extract data into rows
     rows = [{
         "Topic": topic.topic_name,
         "Count": topic.count,
         "Resolution": topic.resolution_statement,
-        "Examples" : topic.examples
+        "Examples" : topic.examples,
+        "Embedding" : topic.embedding
     } for topic in current_topics_with_count.values()]
 
     with open("output_topics_data/topics_by_count.json", "w+") as f:
@@ -79,23 +85,27 @@ def export_topics_data(current_topics_with_count):
 
 
 def run_topic_modelling_pipeline():
+    # 2. For topics
     try:        
-        with open("output_topics_data/topics_by_count.json", "w+") as f:
+        with open("output_topics_data/topics_by_count.json", "r") as f:
             topics_by_count = json.load(f)
             current_topics_with_count = {topic["Topic"] : Topic(
                                                                 topic_name=topic["Topic"],
                                                                 count=topic["Count"],
                                                                 resolution_statement=topic["Resolution"],
-                                                                examples=json.loads(topic["Examples"])
+                                                                examples=topic["Examples"],
+                                                                embedding=topic["Embedding"]
                                                             ) for topic in topics_by_count}
 
     except Exception as e:
-            current_topics_with_count = extract_topics_from_all_survey_responses()
+        print("ERROR in run_topic_modelling_pipeline", e)    
+        current_topics_with_count = extract_topics_from_all_survey_responses()
+        export_topics_data(current_topics_with_count)
 
-    export_topics_data(current_topics_with_count)
     create_topics_vectordb(topics=list(current_topics_with_count.values()))
 
-
+    # 1. For escalation topics
     escalation_topics = ["my house burned down in a fire"]
     escalation_topics = [EscalationTopic(statement=topic) for topic in escalation_topics]
     create_escalation_topics_vectordb(escalation_topics=escalation_topics)
+
