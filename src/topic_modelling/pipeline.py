@@ -10,7 +10,7 @@ from topic_modelling.agent import extract_topics_from_user_message, format_user_
 from topic_modelling.vectordb import create_topics_vectordb
 from escalation.vectordb import create_escalation_topics_vectordb
 
-useful_cols_and_completed_df = pd.read_csv(useful_cols_and_completed_df)[:10]
+useful_cols_and_completed_df = pd.read_csv(useful_cols_and_completed_df)#[:10]
 
 def extract_topics_from_all_survey_responses():
     print("Topic modelling on", len(useful_cols_and_completed_df), "survey responses")
