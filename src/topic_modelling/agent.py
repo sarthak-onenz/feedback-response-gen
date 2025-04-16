@@ -62,12 +62,18 @@ def create_topic_objects_from_extracted_topics(
     for topic in extracted_topics["detected_topics"]:
         normalized_topic = topic.lower().strip()
         row = df[df["Topic"].str.contains(normalized_topic, na=False)]
-        resolution_statement = row["Resolution"].values[0] if not row.empty else "No resolution found."
+        resolution_statement = row["Resolution"].values[0] if not row.empty else ""
         topic_objects.append(Topic(topic_name=topic, resolution_statement=str(resolution_statement)))
     
     for topic in extracted_topics["suggested_topics"]:
         # We don't have resolutions for these topics.
-        resolution_statement = "No resolution found."
+        resolution_statement = ""
         topic_objects.append(Topic(topic_name=topic, resolution_statement=str(resolution_statement)))
     
     return topic_objects
+
+
+def rank_and_filter_topics(topics: List[Topic], n_topics_to_retain: int = 3) -> List[Topic]:
+    ranked_topics = sorted(topics, key=lambda t: t.importance_score, reverse=True)
+    filtered_topics = [topic for topic in ranked_topics if topic.resolution_statement.strip()]
+    return filtered_topics[:n_topics_to_retain]
